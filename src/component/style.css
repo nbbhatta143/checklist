@@ -1,0 +1,154 @@
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem;
+  background-color: #eee;
+}
+
+.profile-picture {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.profile-picture img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-details {
+  text-align: center;
+}
+
+.profile-details h2 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-details h3 {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-details p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+
+.profile-skills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-skills li {
+  background-color: #ddd;
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  margin: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.profile-skills li:first-child {
+  margin-left: 0;
+}
+
+.profile-skills li:last-child {
+  margin-right: 0;
+}
+
+.profile-section {
+  padding: 4rem;
+  background-color: #fff;
+}
+
+.profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-section h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.profile-experience,
+.profile-education {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.experience-card,
+.education-card {
+  background-color: #ddd;
+  padding: 2rem;
+  border-radius: 10px;
+  margin: 2rem;
+  width: 400px;
+  height: 100%;
+}
+
+.experience-card h3,
+.education-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.experience-card h4,
+.education-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.experience-card .experience-date,
+.education-card .education-date {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.experience-card p,
+.education-card p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+.activated {
+  display: inline-block !important ;
+}
+.inActive {
+  display: none !important;
+}
+/* ul {
+  display: flex;
+  flex-direction: column;
+  
+} */

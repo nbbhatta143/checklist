@@ -1,25 +1,163 @@
-import "../App.css";
 import React, { Component } from "react";
-import logo from "../logo.svg";
+import DeleteIcon from "@mui/icons-material/Delete";
+import "@fortawesome/fontawesome-free/css/all.css";
+import { IconButton } from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import Checkbox from "@mui/material/Checkbox";
 
 class Home extends Component {
+  state = {
+    items: [],
+    newItemText: "",
+    clicked: "",
+    check: "",
+  };
+  componentDidMount() {
+    const storedItems = JSON.parse(localStorage.getItem("items"));
+    let clickValue = "";
+    if (storedItems) {
+      this.setState({ items: storedItems });
+    }
+    if (storedItems) {
+      if (storedItems.length >= 1) {
+        clickValue = "activated";
+      } else {
+        clickValue = "inActive";
+      }
+      this.setState(() => ({
+        clicked: clickValue,
+      }));
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem("items", JSON.stringify(this.state.items));
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ newItemText: event.target.value });
+  };
+
+  handleAddItem = (event) => {
+    event.preventDefault();
+    const newItemText = this.state.newItemText.trim();
+    if (!newItemText) {
+      return;
+    }
+    const newItem = {
+      id: Date.now(),
+      text: newItemText,
+      done: false,
+    };
+    this.setState((prevState) => ({
+      items: [...prevState.items, newItem],
+      newItemText: "",
+      clicked: "activated",
+    }));
+  };
+
+  handleDeleteItem = (itemId) => {
+    this.setState((prevState) => ({
+      items: prevState.items.filter((item) => item.id !== itemId),
+    }));
+  };
+
+  handleDeleteAllChange = () => {
+    this.setState((prevState) => ({
+      items: [],
+      clicked: "inActive",
+    }));
+  };
+
+  handleToggleDone = (itemId) => {
+    this.setState((prevState) => ({
+      items: prevState.items.map((item) => {
+        if (item.id === itemId) {
+          return {
+            ...item,
+            done: !item.done,
+          };
+        } else {
+          return item;
+        }
+      }),
+    }));
+  };
+
+  handleToggleAll = () => {
+    this.setState((prevState) => ({
+      items: prevState.items.map((item) => {
+        return {
+          ...item,
+          done: !item.done,
+        };
+      }),
+    }));
+  };
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="checklist" style={{ marginTop: "3%" }}>
+        <h1>Create your checklist</h1>
+        <form onSubmit={this.handleAddItem}>
+          <label>
+            &nbsp;&nbsp;Add your lists :&nbsp;&nbsp;
+            <input
+              type="text"
+              value={this.state.newItemText}
+              onChange={this.handleInputChange}
+              required
+            />
+          </label>
+          <IconButton type="submit" color="primary" aria-label="add to shopping cart">
+            <AddShoppingCartIcon />
+          </IconButton>
+          <DeleteIcon
+            className="delete"
+            color="secondary"
+            xs={10}
+            onClick={() => this.handleDeleteAllChange()}
           >
-            Learn React
-          </a>
-        </header>
+            Delete
+          </DeleteIcon>{" "}
+          <Checkbox
+            value="checkedA"
+            type="checkbox"
+            color="primary"
+            className={this.state.clicked}
+            inputProps={{
+              "aria-label": "Checkbox A",
+            }}
+            size="small"
+            defaultValue={""}
+            onChange={() => this.handleToggleAll()}
+          ></Checkbox>
+        </form>
+
+        <ul>
+          {this.state.items.map((item) => (
+            <li key={item.id}>
+              <label className={item.done ? "done" : ""}>
+                <input
+                  className="checkbox"
+                  type="checkbox"
+                  checked={item.done}
+                  onChange={() => this.handleToggleDone(item.id)}
+                />{" "}
+                {item.text}
+              </label>
+
+              <DeleteIcon
+                className="delete"
+                color="success"
+                id="deleteItems"
+                xs={10}
+                onClick={() => this.handleDeleteItem(item.id)}
+              >
+                Delete
+              </DeleteIcon>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }

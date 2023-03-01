@@ -1,0 +1,9 @@
+.link {
+  color: rgb(107, 105, 105) !important;
+  text-decoration: none;
+}
+.me-auto a {
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+}
