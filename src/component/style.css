@@ -20,8 +20,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4rem;
-  background-color: #eee;
+  padding: 2rem;
+  background-color: #ffffff;
+  padding-bottom: 0rem;
 }
 
 .profile-picture {
@@ -40,6 +41,9 @@
 
 .profile-details {
   text-align: center;
+  width: 100%;
+  height: auto;
+  background-color: rgba(236, 236, 236, 0.63);
 }
 
 .profile-details h2 {
@@ -87,13 +91,14 @@
 }
 
 .profile-section {
-  padding: 4rem;
+  padding: 1rem;
   background-color: #fff;
 }
 
 .profile-container {
   max-width: 1200px;
   margin: 0 auto;
+  background-color: rgba(236, 236, 236, 0.63);
 }
 
 .profile-section h2 {
@@ -117,7 +122,10 @@
   width: 400px;
   height: 100%;
 }
-
+.experience-card {
+  width: 100%;
+  height: auto;
+}
 .experience-card h3,
 .education-card h3 {
   font-size: 1.5rem;
@@ -152,3 +160,9 @@
   flex-direction: column;
   
 } */
+.exp,
+.ed {
+  margin: 0 !important;
+  padding: 0;
+  text-align: center;
+}

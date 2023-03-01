@@ -38,15 +38,16 @@ class Profile extends Component {
             </ul>
           </div>
         </div>
+        <h2 className="exp">Experience</h2>
         <section className="profile-section">
           <div className="profile-container">
-            <h2>Experience</h2>
             <div className="profile-experience">
               <div className="experience-card">
                 <h3 style={{ marginBlock: 0 }}>Software Developer</h3>
                 <h4 style={{ marginBlock: 0 }}>Huntington Bank</h4>
                 <span className="experience-date">March 2022 - Present</span>
-                <p style={{ textAlign: "center" }}>
+
+                <p style={{ marginTop: "0.5rem" }}>
                   Responsible for developing and maintaining RESTful APIs that served as the backend
                   for data to publish and subscribe enterprise event-hub. I used Spring Boot to
                   build the APIs and integrated them with a variety of third-party APIs such as
@@ -58,7 +59,7 @@ class Profile extends Component {
                 <h3 style={{ marginBlock: 0 }}>Software Developer</h3>
                 <h4 style={{ marginBlock: 0 }}>Accenture</h4>
                 <span className="experience-date">Aug 2021 - Present</span>
-                <p>
+                <p style={{ marginTop: "0.5rem" }}>
                   I support production for a batch job by monitoring and maintaining the batch job
                   to ensure it runs smoothly and completes within the required time frame. I am
                   responsible for identifying and resolving any issues that arise during batch
@@ -73,9 +74,9 @@ class Profile extends Component {
             </div>
           </div>
         </section>
+        <h2 className="ed">Education</h2>
         <section className="profile-section">
           <div className="profile-container">
-            <h2>Education</h2>
             <div className="profile-education">
               <div className="education-card">
                 <h3 style={{ marginBlock: 0 }}>Bachelor's in Computer Science</h3>

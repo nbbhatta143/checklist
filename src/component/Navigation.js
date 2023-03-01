@@ -14,7 +14,7 @@ class Navigation extends Component {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Link className="link" to="/">
-                Home
+                Checklist
               </Link>
               <Link className="link" to="/profile">
                 Profile

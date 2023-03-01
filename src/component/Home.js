@@ -99,26 +99,7 @@ class Home extends Component {
       <div className="checklist" style={{ marginTop: "3%" }}>
         <h1>Create your checklist</h1>
         <form onSubmit={this.handleAddItem}>
-          <label>
-            &nbsp;&nbsp;Add your lists :&nbsp;&nbsp;
-            <input
-              type="text"
-              value={this.state.newItemText}
-              onChange={this.handleInputChange}
-              required
-            />
-          </label>
-          <IconButton type="submit" color="primary" aria-label="add to shopping cart">
-            <AddShoppingCartIcon />
-          </IconButton>
-          <DeleteIcon
-            className="delete"
-            color="secondary"
-            xs={10}
-            onClick={() => this.handleDeleteAllChange()}
-          >
-            Delete
-          </DeleteIcon>{" "}
+          {" "}
           <Checkbox
             value="checkedA"
             type="checkbox"
@@ -131,6 +112,25 @@ class Home extends Component {
             defaultValue={""}
             onChange={() => this.handleToggleAll()}
           ></Checkbox>
+          <DeleteIcon
+            className="delete"
+            color="secondary"
+            xs={10}
+            onClick={() => this.handleDeleteAllChange()}
+          >
+            Delete
+          </DeleteIcon>{" "}
+          <IconButton type="submit" color="primary" aria-label="add to shopping cart">
+            <AddShoppingCartIcon />
+          </IconButton>
+          <input
+            type="text"
+            placeholder="Enter your lists"
+            maxLength={40}
+            value={this.state.newItemText}
+            onChange={this.handleInputChange}
+            required
+          />
         </form>
 
         <ul>
