@@ -10,12 +10,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* <Navigation />
+        <Navigation />
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<ChecklistApp />} />
           <Route path="/profile" element={<Profile />} />
-        </Routes> */}
-        <ChecklistApp />
+        </Routes>
       </div>
     );
   }
