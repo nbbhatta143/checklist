@@ -1,0 +1,136 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.subcard {
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.title {
+  /* display: flex; */
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  flex-direction: column;
+  /* justify-content: space-evenly; */
+}
+
+.form-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.form-container input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-right: 10px;
+}
+
+.form-container button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #45a049;
+}
+
+.items-container {
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.items-container li {
+  display: flex;
+  align-items: center;
+}
+
+.items-container span {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.edit-button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.edit-button:hover {
+  background-color: #1976d2;
+}
+
+.error-message {
+  color: red;
+  margin-bottom: 10px;
+}
+.category-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f;
+}
+.categories-container {
+  margin-top: 16px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.category-item span {
+  margin-right: 8px;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.delete-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
