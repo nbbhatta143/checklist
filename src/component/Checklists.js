@@ -269,7 +269,7 @@ class Checklist extends React.Component {
       items,
     };
     const shareableLink = encodeURIComponent(JSON.stringify(data));
-    const shareURL = `${window.location.origin}/share?data=${shareableLink}`;
+    const shareURL = `${window.location.origin}/?data=${shareableLink}`;
 
     if (navigator.share) {
       navigator
@@ -333,8 +333,8 @@ class Checklist extends React.Component {
                       <>
                         <input
                           type="text"
-                          onChange={(e) => this.setState({ editedItem: e.target.value })}
                           value={editedItem}
+                          onChange={(e) => this.setState({ editedItem: e.target.value })}
                           placeholder={item.text}
                         />
                         <button className="edit-button" onClick={this.handleItemUpdate}>

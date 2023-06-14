@@ -16,7 +16,6 @@ class Navigation extends Component {
               <Link className="link" to="/">
                 Checklist
               </Link>
-              <Link className="link" to="/share" />
               <Link className="link" to="/profile">
                 Profile
               </Link>
