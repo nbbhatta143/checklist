@@ -3,8 +3,7 @@ import React, { Component } from "react";
 import { Route, Routes } from "react-router-dom";
 import Navigation from "./component/Navigation";
 import Profile from "./component/Profile";
-import Home from "./component/Home";
-import ChecklistApp from "./component/Checklists";
+import Checklist from "./component/Checklists";
 
 class App extends Component {
   render() {
@@ -12,7 +11,7 @@ class App extends Component {
       <div className="App">
         <Navigation />
         <Routes>
-          <Route exact path="/" element={<ChecklistApp />} />
+          <Route exact path="/" element={<Checklist />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>

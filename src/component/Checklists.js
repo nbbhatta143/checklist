@@ -9,7 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 
 import "./Checklist.css";
 
-class ChecklistApp extends React.Component {
+class Checklist extends React.Component {
   constructor(props) {
     super(props);
 
@@ -168,13 +168,19 @@ class ChecklistApp extends React.Component {
     const updatedCategories = categories.filter((cat) => cat !== category);
     const updatedItems = { ...items };
     delete updatedItems[category];
-    this.setState({
-      categories: updatedCategories,
-      items: updatedItems,
-      selectedCategory: "",
-      editedItemIndex: -1,
-      editedItem: "",
-    });
+    this.setState(
+      {
+        categories: updatedCategories,
+        items: updatedItems,
+        selectedCategory: "",
+        editedItemIndex: -1,
+        editedItem: "",
+      },
+      () => {
+        localStorage.setItem("checklistCategories", JSON.stringify(updatedCategories));
+        localStorage.setItem("checklistItems", JSON.stringify(updatedItems));
+      }
+    );
   };
 
   handleCancelEdit = () => {
@@ -274,7 +280,6 @@ class ChecklistApp extends React.Component {
                         <>
                           <span>{item}</span>
                           <Edit
-                            // className="edit-button"
                             onClick={() =>
                               this.handleItemEdit(selectedCategory || defaultCategory, index, item)
                             }
@@ -301,4 +306,4 @@ class ChecklistApp extends React.Component {
   }
 }
 
-export default ChecklistApp;
+export default Checklist;
