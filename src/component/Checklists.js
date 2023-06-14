@@ -4,7 +4,7 @@ import { Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import Checkbox from "@mui/material/Checkbox";
-import { ShareTwoTone } from "@mui/icons-material";
+import { Share } from "@mui/icons-material";
 
 import "./Checklist.css";
 
@@ -264,7 +264,7 @@ class Checklist extends React.Component {
             <IconButton type="submit">
               <Add />
             </IconButton>
-            <ShareTwoTone onClick={this.shareList}></ShareTwoTone>
+            <Share onClick={this.shareList} />
           </form>
 
           {this.renderCategoryDropdown()}
