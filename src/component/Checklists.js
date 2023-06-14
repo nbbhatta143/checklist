@@ -353,7 +353,11 @@ class Checklist extends React.Component {
                             onChange={() => this.handleCheckboxToggle(selectedCategory, index)}
                           />
                         </label>
-                        <span>{item.text}</span>
+                        <span>
+                          {item.text.length >= Math.round(this.state.deviceWidth / 20)
+                            ? `${item.text.slice(0, Math.round(this.state.deviceWidth / 20))}...`
+                            : item.text}
+                        </span>
                         <Edit
                           className="category-button"
                           onClick={() =>

@@ -70,7 +70,6 @@
   display: flex;
   align-items: center;
   white-space: nowrap;
-  overflow: scroll;
   text-overflow: ellipsis;
 }
 
