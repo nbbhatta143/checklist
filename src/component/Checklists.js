@@ -11,7 +11,7 @@ import "./Checklist.css";
 class Checklist extends React.Component {
   constructor(props) {
     super(props);
-
+    this.sentenceRef = React.createRef();
     this.state = {
       categories: [],
       selectedCategory: "",
@@ -21,22 +21,63 @@ class Checklist extends React.Component {
       editedItemIndex: -1,
       editedItem: "",
       errorMessage: "",
+      deviceWidth: window.innerWidth,
     };
   }
-
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
   componentDidMount() {
-    const storedCategories = localStorage.getItem("checklistCategories");
-    const storedItems = localStorage.getItem("checklistItems");
+    const sharedData = this.getSharedDataFromURL();
+    window.addEventListener("resize", this.handleResize);
 
-    if (storedCategories) {
-      this.setState({ categories: JSON.parse(storedCategories) });
-    }
+    if (sharedData) {
+      const { categories, items } = sharedData;
+      this.setState(
+        {
+          categories,
+          selectedCategory: categories[0] || "",
+          items,
+        },
+        () => {
+          localStorage.setItem("checklistCategories", JSON.stringify(categories));
+          localStorage.setItem("checklistItems", JSON.stringify(items));
+        }
+      );
+    } else {
+      const storedCategories = localStorage.getItem("checklistCategories");
+      const storedItems = localStorage.getItem("checklistItems");
 
-    if (storedItems) {
-      this.setState({ items: JSON.parse(storedItems) });
+      if (storedCategories) {
+        this.setState({ categories: JSON.parse(storedCategories) });
+      }
+
+      if (storedItems) {
+        this.setState({ items: JSON.parse(storedItems) });
+      }
     }
   }
+  handleResize = () => {
+    this.setState({
+      deviceWidth: window.innerWidth,
+    });
+  };
+  getSharedDataFromURL() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedDataParam = urlParams.get("data");
 
+    if (sharedDataParam) {
+      try {
+        const decodedData = decodeURIComponent(sharedDataParam);
+        const sharedData = JSON.parse(decodedData);
+        return sharedData;
+      } catch (error) {
+        console.error("Error parsing shared data:", error);
+      }
+    }
+
+    return null;
+  }
   handleCategoryChange = (e) => {
     this.setState({ selectedCategory: e.target.value });
   };
@@ -69,6 +110,10 @@ class Checklist extends React.Component {
   };
 
   handleItemChange = (e) => {
+    // const text =
+    //   e.target.value.length >= Math.round(this.state.deviceWidth / 20)
+    //     ? `${e.target.value.slice(0, Math.round(this.state.deviceWidth / 20))}...`
+    //     : e.target.value;
     this.setState({ text: e.target.value });
   };
 
@@ -81,7 +126,6 @@ class Checklist extends React.Component {
     if (trimmedText !== "") {
       const categoryItems = items[selectedCategory] || [];
       const updatedItems = [...categoryItems, { id: Date.now(), text: trimmedText, done: false }];
-
       this.setState(
         (prevState) => ({
           items: {
@@ -225,13 +269,20 @@ class Checklist extends React.Component {
       items,
     };
     const shareableLink = encodeURIComponent(JSON.stringify(data));
+    const shareURL = `${window.location.origin}/share?data=${shareableLink}`;
 
-    // Implement your desired sharing mechanism here
-    // For example, you can copy the shareable link to the clipboard or open a share dialog
-    // You can use libraries like react-copy-to-clipboard or react-share for these functionalities
-
-    // Here's an example using the built-in JavaScript prompt:
-    prompt("Share this link:", `${window.location.origin}/share?data=${shareableLink}`);
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Checklist",
+          text: "Check out this checklist!",
+          url: shareURL,
+        })
+        .then(() => console.log("Share successful"))
+        .catch((error) => console.error("Share failed:", error));
+    } else {
+      console.log("Web Share API not supported");
+    }
   };
 
   render() {

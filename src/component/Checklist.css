@@ -69,6 +69,9 @@
 .items-container li {
   display: flex;
   align-items: center;
+  white-space: nowrap;
+  overflow: scroll;
+  text-overflow: ellipsis;
 }
 
 .items-container span {

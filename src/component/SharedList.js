@@ -1,25 +1,48 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
-function SharedList() {
-  const [parsedData, setParsedData] = useState(null);
+const SharedList = ({ items }) => {
+  const [categories, setCategories] = useState([localStorage.getItem("checklistCategories")]);
+  const [sharedMessage, setSharedMessage] = useState(localStorage.getItem("checklistItems"));
 
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const encodedData = urlParams.get("data");
+  // Function to handle sharing the categories and their lists via message
+  const handleShareCategories = () => {
+    const sharedContent = categories.map((category) => {
+      const categoryItems = items[category] || [];
+      const formattedItems = categoryItems.join("\n"); // Join items with line breaks
 
-    if (encodedData) {
-      const decodedData = JSON.parse(decodeURIComponent(encodedData));
-      setParsedData(decodedData);
-    }
-  }, []);
+      return `${category}:\n${formattedItems}\n`; // Format category and items
+    });
+
+    const sharedMessage = sharedContent.join("\n"); // Join categories with line breaks
+
+    setSharedMessage(sharedMessage);
+  };
 
   return (
     <div>
-      {/* Render the parsed data */}
-      {parsedData}
+      {/* Render your category list */}
+      <ul>
+        {categories.map((category) => (
+          <li key={category}>{category}</li>
+        ))}
+      </ul>
+
+      {/* Share button */}
+      <button onClick={handleShareCategories}>Share Categories</button>
+
+      {/* Render shared message */}
+      {sharedMessage && (
+        <div>
+          <h3>Shared Categories and Lists:</h3>
+          <pre>{sharedMessage}</pre>
+        </div>
+      )}
+
+      {/* Link to navigate to other routes */}
+      <Link to="/share">Go to Shared List</Link>
     </div>
   );
-}
+};
 
 export default SharedList;
