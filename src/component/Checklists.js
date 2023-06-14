@@ -252,80 +252,78 @@ class Checklist extends React.Component {
 
           {this.renderCategoryDropdown()}
 
-          <div className="card">
-            {selectedCategory || defaultCategory ? (
-              <>
-                <h2 className="title">
-                  {selectedCategory || defaultCategory}
-                  {selectedCategory && this.renderCategoryDeleteButton(selectedCategory)}
-                </h2>
+          {selectedCategory || defaultCategory ? (
+            <>
+              <h2 className="title">
+                {selectedCategory || defaultCategory}
+                {selectedCategory && this.renderCategoryDeleteButton(selectedCategory)}
+              </h2>
 
-                <form className="form-container" onSubmit={this.handleItemSubmit}>
-                  <input
-                    type="text"
-                    value={text}
-                    onChange={this.handleItemChange}
-                    placeholder="Enter item"
-                  />
-                  <IconButton type="submit">
-                    <Add />
-                  </IconButton>
-                </form>
+              <form className="form-container" onSubmit={this.handleItemSubmit}>
+                <input
+                  type="text"
+                  value={text}
+                  onChange={this.handleItemChange}
+                  placeholder="Enter item"
+                />
+                <IconButton type="submit">
+                  <Add />
+                </IconButton>
+              </form>
 
-                <ul className="items-container">
-                  {(items[selectedCategory || defaultCategory] || []).map((item, index) => (
-                    <li key={index} className="subcard">
-                      {editedCategory === selectedCategory && editedItemIndex === index ? (
-                        <>
-                          <input
-                            type="text"
-                            onChange={(e) => this.setState({ editedItem: e.target.value })}
-                            value={editedItem}
-                            placeholder={item.text}
+              <ul className="items-container">
+                {(items[selectedCategory || defaultCategory] || []).map((item, index) => (
+                  <li key={index} className="subcard">
+                    {editedCategory === selectedCategory && editedItemIndex === index ? (
+                      <>
+                        <input
+                          type="text"
+                          onChange={(e) => this.setState({ editedItem: e.target.value })}
+                          value={editedItem}
+                          placeholder={item.text}
+                        />
+                        <button className="edit-button" onClick={this.handleItemUpdate}>
+                          Save
+                        </button>
+                        <button className="edit-button" onClick={this.handleCancelEdit}>
+                          Cancel
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <label className={item.done ? "done" : ""}>
+                          <Checkbox
+                            type="checkbox"
+                            checked={item.checked}
+                            onChange={() => this.handleCheckboxToggle(selectedCategory, index)}
                           />
-                          <button className="edit-button" onClick={this.handleItemUpdate}>
-                            Save
-                          </button>
-                          <button className="edit-button" onClick={this.handleCancelEdit}>
-                            Cancel
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <label className={item.done ? "done" : ""}>
-                            <Checkbox
-                              type="checkbox"
-                              checked={item.checked}
-                              onChange={() => this.handleCheckboxToggle(selectedCategory, index)}
-                            />
-                          </label>
-                          <span>{item.text}</span>
-                          <Edit
-                            className="category-button"
-                            onClick={() =>
-                              this.handleItemEdit(
-                                selectedCategory || defaultCategory,
-                                index,
-                                item.text
-                              )
-                            }
-                          />
-                          <DeleteIcon
-                            className="category-button"
-                            onClick={() =>
-                              this.handleItemDelete(selectedCategory || defaultCategory, index)
-                            }
-                          />
-                        </>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ) : (
-              <p>No categories available.</p>
-            )}
-          </div>
+                        </label>
+                        <span>{item.text}</span>
+                        <Edit
+                          className="category-button"
+                          onClick={() =>
+                            this.handleItemEdit(
+                              selectedCategory || defaultCategory,
+                              index,
+                              item.text
+                            )
+                          }
+                        />
+                        <DeleteIcon
+                          className="category-button"
+                          onClick={() =>
+                            this.handleItemDelete(selectedCategory || defaultCategory, index)
+                          }
+                        />
+                      </>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <p>No categories available.</p>
+          )}
         </div>
       </div>
     );
