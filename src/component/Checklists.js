@@ -269,7 +269,7 @@ class Checklist extends React.Component {
       items,
     };
     const shareableLink = encodeURIComponent(JSON.stringify(data));
-    const shareURL = `${window.location.origin}/?data=${shareableLink}`;
+    const shareURL = `${window.location.origin}/checklist?data=${shareableLink}`;
 
     if (navigator.share) {
       navigator
