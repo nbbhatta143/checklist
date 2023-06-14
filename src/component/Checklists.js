@@ -183,21 +183,20 @@ class Checklist extends React.Component {
     this.setState({ editedCategory: "", editedItemIndex: -1, editedItem: "", errorMessage: "" });
   };
 
-  handleToggleDone = (categoryId, itemId) => {
-    this.setState((prevState) => ({
-      items: {
-        ...prevState.items,
-        [categoryId]: prevState.items[categoryId].map((item) => {
-          if (item.id === itemId) {
-            return {
-              ...item,
-              done: !item.done,
-            };
-          }
-          return item;
-        }),
-      },
-    }));
+  handleCheckboxToggle = (category, index) => {
+    const { items } = this.state;
+    const categoryItems = [...(items[category] || [])];
+    categoryItems[index].checked = !categoryItems[index].checked;
+
+    const updatedItems = {
+      ...items,
+      [category]: categoryItems,
+    };
+
+    this.setState({ items: updatedItems }, () => {
+      const { items } = this.state;
+      localStorage.setItem("checklistItems", JSON.stringify(items));
+    });
   };
 
   renderCategoryDropdown = () => {
@@ -295,11 +294,9 @@ class Checklist extends React.Component {
                         <>
                           <label className={item.done ? "done" : ""}>
                             <Checkbox
-                              className="checkbox"
-                              checked={item.done}
-                              onChange={() =>
-                                this.handleToggleDone(selectedCategory || defaultCategory, item.id)
-                              }
+                              type="checkbox"
+                              checked={item.checked}
+                              onChange={() => this.handleCheckboxToggle(selectedCategory, index)}
                             />
                           </label>
                           <span>{item.text}</span>
