@@ -220,11 +220,11 @@ class Checklist extends React.Component {
   };
   shareList = () => {
     const { categories, items } = this.state;
-    const listData = {
+    const data = {
       categories,
       items,
     };
-    const shareableLink = encodeURIComponent(JSON.stringify(listData));
+    const shareableLink = encodeURIComponent(JSON.stringify(data));
 
     // Implement your desired sharing mechanism here
     // For example, you can copy the shareable link to the clipboard or open a share dialog

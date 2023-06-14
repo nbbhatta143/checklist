@@ -1,24 +1,25 @@
 import React from "react";
+import { useEffect, useState } from "react";
 
-class SharedList extends React.Component {
-  componentDidMount() {
-    const { location } = this.props;
-    const searchParams = new URLSearchParams(location.search);
-    const sharedData = searchParams.get("data");
+function SharedList() {
+  const [parsedData, setParsedData] = useState(null);
 
-    // Parse the shared data and set it in the component state
-    try {
-      const parsedData = JSON.parse(decodeURIComponent(sharedData));
-      // Set the parsed data in the state or perform any other required logic
-      console.log(parsedData);
-    } catch (error) {
-      console.error("Error parsing shared data:", error);
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const encodedData = urlParams.get("data");
+
+    if (encodedData) {
+      const decodedData = JSON.parse(decodeURIComponent(encodedData));
+      setParsedData(decodedData);
     }
-  }
+  }, []);
 
-  render() {
-    return <div>Shared List</div>;
-  }
+  return (
+    <div>
+      {/* Render the parsed data */}
+      {parsedData}
+    </div>
+  );
 }
 
 export default SharedList;
