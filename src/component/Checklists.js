@@ -1,10 +1,8 @@
 import React from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Edit } from "@mui/icons-material";
-import "@fortawesome/fontawesome-free/css/all.css";
 import { IconButton } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { Add } from "@mui/icons-material";
+import Add from "@mui/icons-material/Add";
 import Checkbox from "@mui/material/Checkbox";
 
 import "./Checklist.css";
@@ -13,7 +11,6 @@ class Checklist extends React.Component {
   constructor(props) {
     super(props);
 
-    // Initialize the state
     this.state = {
       categories: [],
       selectedCategory: "",
@@ -27,7 +24,6 @@ class Checklist extends React.Component {
   }
 
   componentDidMount() {
-    // Retrieve categories and items from localStorage
     const storedCategories = localStorage.getItem("checklistCategories");
     const storedItems = localStorage.getItem("checklistItems");
 
@@ -83,7 +79,7 @@ class Checklist extends React.Component {
 
     if (trimmedText !== "") {
       const categoryItems = items[selectedCategory] || [];
-      const updatedItems = [...categoryItems, trimmedText];
+      const updatedItems = [...categoryItems, { id: Date.now(), text: trimmedText, done: false }];
 
       this.setState(
         (prevState) => ({
@@ -108,7 +104,7 @@ class Checklist extends React.Component {
     this.setState({
       editedCategory: category,
       editedItemIndex: index,
-      editedItem: item,
+      editedItem: item.text,
       errorMessage: "",
     });
   };
@@ -119,7 +115,7 @@ class Checklist extends React.Component {
 
     if (trimmedItem !== "") {
       const categoryItems = [...(items[editedCategory] || [])];
-      categoryItems[editedItemIndex] = trimmedItem;
+      categoryItems[editedItemIndex] = { ...categoryItems[editedItemIndex], text: trimmedItem };
 
       const updatedItems = {
         ...items,
@@ -187,6 +183,23 @@ class Checklist extends React.Component {
     this.setState({ editedCategory: "", editedItemIndex: -1, editedItem: "", errorMessage: "" });
   };
 
+  handleToggleDone = (categoryId, itemId) => {
+    this.setState((prevState) => ({
+      items: {
+        ...prevState.items,
+        [categoryId]: prevState.items[categoryId].map((item) => {
+          if (item.id === itemId) {
+            return {
+              ...item,
+              done: !item.done,
+            };
+          }
+          return item;
+        }),
+      },
+    }));
+  };
+
   renderCategoryDropdown = () => {
     const { categories } = this.state;
 
@@ -203,7 +216,7 @@ class Checklist extends React.Component {
   };
 
   renderCategoryDeleteButton = (category) => {
-    return <DeleteIcon onClick={() => this.handleCategoryDelete(category)}></DeleteIcon>;
+    return <DeleteIcon onClick={() => this.handleCategoryDelete(category)} />;
   };
 
   render() {
@@ -235,7 +248,6 @@ class Checklist extends React.Component {
             />
             <IconButton type="submit">
               <Add />
-              {/* Add Category */}
             </IconButton>
           </form>
 
@@ -256,7 +268,9 @@ class Checklist extends React.Component {
                     onChange={this.handleItemChange}
                     placeholder="Enter item"
                   />
-                  <button type="submit">Add Item</button>
+                  <IconButton type="submit">
+                    <Add />
+                  </IconButton>
                 </form>
 
                 <ul className="items-container">
@@ -266,8 +280,9 @@ class Checklist extends React.Component {
                         <>
                           <input
                             type="text"
-                            value={editedItem}
                             onChange={(e) => this.setState({ editedItem: e.target.value })}
+                            value={editedItem}
+                            placeholder={item.text}
                           />
                           <button className="edit-button" onClick={this.handleItemUpdate}>
                             Save
@@ -278,18 +293,32 @@ class Checklist extends React.Component {
                         </>
                       ) : (
                         <>
-                          <span>{item}</span>
+                          <label className={item.done ? "done" : ""}>
+                            <Checkbox
+                              className="checkbox"
+                              checked={item.done}
+                              onChange={() =>
+                                this.handleToggleDone(selectedCategory || defaultCategory, item.id)
+                              }
+                            />
+                          </label>
+                          <span>{item.text}</span>
                           <Edit
+                            className="category-button"
                             onClick={() =>
-                              this.handleItemEdit(selectedCategory || defaultCategory, index, item)
+                              this.handleItemEdit(
+                                selectedCategory || defaultCategory,
+                                index,
+                                item.text
+                              )
                             }
-                          ></Edit>
+                          />
                           <DeleteIcon
                             className="category-button"
                             onClick={() =>
                               this.handleItemDelete(selectedCategory || defaultCategory, index)
                             }
-                          ></DeleteIcon>
+                          />
                         </>
                       )}
                     </li>
