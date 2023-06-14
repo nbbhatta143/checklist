@@ -4,6 +4,7 @@ import { Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import Add from "@mui/icons-material/Add";
 import Checkbox from "@mui/material/Checkbox";
+import { ShareTwoTone } from "@mui/icons-material";
 
 import "./Checklist.css";
 
@@ -217,6 +218,21 @@ class Checklist extends React.Component {
   renderCategoryDeleteButton = (category) => {
     return <DeleteIcon onClick={() => this.handleCategoryDelete(category)} />;
   };
+  shareList = () => {
+    const { categories, items } = this.state;
+    const listData = {
+      categories,
+      items,
+    };
+    const shareableLink = encodeURIComponent(JSON.stringify(listData));
+
+    // Implement your desired sharing mechanism here
+    // For example, you can copy the shareable link to the clipboard or open a share dialog
+    // You can use libraries like react-copy-to-clipboard or react-share for these functionalities
+
+    // Here's an example using the built-in JavaScript prompt:
+    prompt("Share this link:", `${window.location.origin}/share?data=${shareableLink}`);
+  };
 
   render() {
     const {
@@ -234,7 +250,7 @@ class Checklist extends React.Component {
     return (
       <div className="container">
         <div className="card">
-          <h1 className="title">Checklist App</h1>
+          <h1 className="title">Create Your Checklist!</h1>
 
           {errorMessage && <p className="error-message">{errorMessage}</p>}
 
@@ -248,6 +264,7 @@ class Checklist extends React.Component {
             <IconButton type="submit">
               <Add />
             </IconButton>
+            <ShareTwoTone onClick={this.shareList}></ShareTwoTone>
           </form>
 
           {this.renderCategoryDropdown()}
@@ -258,19 +275,6 @@ class Checklist extends React.Component {
                 {selectedCategory || defaultCategory}
                 {selectedCategory && this.renderCategoryDeleteButton(selectedCategory)}
               </h2>
-
-              <form className="form-container" onSubmit={this.handleItemSubmit}>
-                <input
-                  type="text"
-                  value={text}
-                  onChange={this.handleItemChange}
-                  placeholder="Enter item"
-                />
-                <IconButton type="submit">
-                  <Add />
-                </IconButton>
-              </form>
-
               <ul className="items-container">
                 {(items[selectedCategory || defaultCategory] || []).map((item, index) => (
                   <li key={index} className="subcard">
@@ -320,6 +324,17 @@ class Checklist extends React.Component {
                   </li>
                 ))}
               </ul>
+              <form className="form-container" onSubmit={this.handleItemSubmit}>
+                <input
+                  type="text"
+                  value={text}
+                  onChange={this.handleItemChange}
+                  placeholder="Enter item"
+                />
+                <IconButton type="submit">
+                  <Add />
+                </IconButton>
+              </form>
             </>
           ) : (
             <p>No categories available.</p>
